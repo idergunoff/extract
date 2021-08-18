@@ -46,7 +46,7 @@ def open_dir():
                     del tabl_coef_extr
                     tab_coef = tab_coef.dropna(how='all').reset_index()
                     for n, i in enumerate(tab_coef['№ образца']):
-                        tab_coef['№ образца'][n] = str(i)
+                        tab_coef['№ образца'][n] = replace_letter_of_name(str(i))
 
                 elif ui.radioButton_kern.isChecked():
                     tabl_ves_kern = pd.read_excel(dir_name + '/' + file_journal, header=1)
@@ -87,7 +87,7 @@ def open_dir():
         for filename in direct[-1]:
             if filename.endswith(('.xls', '.xlsx')) and re.search(r'^\d+\w+_\d', filename):
                 data_name = filename.split('.')[0].split('_')
-                obr, pr = data_name[0], data_name[1]
+                obr, pr = replace_letter_of_name(data_name[0]), data_name[1]
                 if obr.startswith('0'):
                     obr = obr[1:]
                 tab = pd.read_excel(direct[0] + '/' + filename, header=None)
@@ -107,6 +107,7 @@ def open_dir():
                                                     float(tab_coef['V_zak'].loc[
                                                               tab_coef['№ образца'] == obr[:-1]].tolist()[0])
                         elif ui.radioButton_kern.isChecked():
+                            print(obr)
                             ves = tabl_ves_kern['Проба ' + pr[-1]].loc[tabl_ves_kern['№ образца'] == obr[:-1]].tolist()[0]
                             tab_comp[i + '_c'][n] = tab[1].loc[tab[0] == i].tolist()[0] / ves / 1000
                 n += 1

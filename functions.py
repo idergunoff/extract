@@ -17,3 +17,12 @@ def found_critical_value(sel):
         else:
             critic_val = 'limbo'
     return critic_val
+
+
+def replace_letter_of_name(name):
+    list_old = ['е', 'у', 'о', 'р', 'х', 'а', 'с']
+    list_new = ['e', 'y', 'o', 'p', 'x', 'a', 'c']
+    name_new = name
+    for n, i in enumerate(list_old):
+        name_new = name_new.replace(i, list_new[n])
+    return name_new
